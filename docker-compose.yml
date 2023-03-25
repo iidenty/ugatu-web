@@ -1,0 +1,26 @@
+version: '2.4'
+
+services:
+  backend-nginx:
+    container_name: backend-nginx
+    image: backend-nginx
+    build:
+      context: docker
+      dockerfile: nginx/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "83:80"
+    depends_on:
+      - backend-php-fpm
+    restart: unless-stopped
+
+  backend-php-fpm:
+    container_name: backend-php-fpm
+    image: backend-php-fpm
+    build:
+      context: docker
+      dockerfile: php-fpm/Dockerfile
+    volumes:
+      - ./:/app
+    restart: unless-stopped

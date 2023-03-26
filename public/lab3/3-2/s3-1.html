@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Прытков Д.О. ПИ-228 БЗУ</title>
+</head>
+<body>
+
+<style>
+    .input-group {
+        margin-bottom: 1rem;
+    }
+</style>
+
+<form action="formHandler.php" method="post">
+    <h3>Калькулятор</h3>
+    <div class="input-group">
+        <input name="number-1" type="text" placeholder="0">
+        <input name="number-2" type="text" placeholder="0">
+    </div>
+    <div class="input-group">
+        действие:
+        <select name="action" id="">
+            <option value="ACTION_SUM">сложить</option>
+            <option value="ACTION_SUBTRACT">вычесть</option>
+            <option value="ACTION_MULTIPLY">умножить</option>
+            <option value="ACTION_DIVIDE">разделить</option>
+        </select>
+    </div>
+    <button type="submit">Отправить</button>
+</form>
+
+</body>
+</html>

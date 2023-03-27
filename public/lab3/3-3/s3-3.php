@@ -99,17 +99,17 @@ function isPrime(int $number): bool {
 <body>
 
 <form action="s3-3.php" method="post">
-    <input type="text" name="number" placeholder="Число">
+    <input type="text" name="number" placeholder="Число" value="<?php echo $request->getNumber('number') ?>">
     <select name="operation">
-        <option value="OPERATION_1">четные делители</option>
-        <option value="OPERATION_2">нечетные делители</option>
-        <option value="OPERATION_3">простые делители</option>
-        <option value="OPERATION_4">составные делители</option>
-        <option value="OPERATION_5">все делители</option>
+        <option value="OPERATION_1" <?php if ($request->getString('operation') === 'OPERATION_1') echo 'selected'?>>четные делители</option>
+        <option value="OPERATION_2" <?php if ($request->getString('operation') === 'OPERATION_2') echo 'selected'?>>нечетные делители</option>
+        <option value="OPERATION_3" <?php if ($request->getString('operation') === 'OPERATION_3') echo 'selected'?>>простые делители</option>
+        <option value="OPERATION_4" <?php if ($request->getString('operation') === 'OPERATION_4') echo 'selected'?>>составные делители</option>
+        <option value="OPERATION_5" <?php if ($request->getString('operation') === 'OPERATION_5') echo 'selected'?>>все делители</option>
     </select>
     <button type="submit">Отправить</button>
 </form>
-
+<br>
 <?php
 
 if (!$request->isPostMethod())
@@ -121,8 +121,17 @@ if (!$request->has('operation')) {
     return;
 }
 
-// TODO: make validation
-$number = $request->getNumber('number');
+if (!$request->has('number')) {
+    http_response_code(400);
+    echo 'Ошибка: operation is required filed.';
+    return;
+}
+
+if (($number = $request->getNumber('number')) === null) {
+    http_response_code(400);
+    echo 'Ошибка: number must be numeric.';
+    return;
+}
 
 $dividers = [];
 for ($i = 2; $i < $number; $i++) {
@@ -165,8 +174,7 @@ if ($operation === 'OPERATION_1') {
     return;
 }
 
-echo "<br>Ответ: " . implode(', ', $resultList);
-
+echo "Ответ: " . implode(', ', $resultList);
 
 ?>
 

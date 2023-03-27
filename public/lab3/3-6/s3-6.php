@@ -8,18 +8,22 @@ require_once "BadRequestException.php";
 
 $request = \lab3s36\Request::createFromGlobals();
 
-if (!$request->isPostMethod())
-    throw new \lab3s36\BadRequestException('Only post methods.');
+try {
+    if (!$request->isPostMethod())
+        throw new \lab3s36\BadRequestException('Only post methods.');
 
-$content = $request->getString('content');
+    $content = $request->getString('content');
 
-if ($content === null)
-    throw new \lab3s36\BadRequestException('Content is required field.');
+    if ($content === null)
+        throw new \lab3s36\BadRequestException('Content is required field.');
 
-$pattern = '~(?<vowels>[аеёиоуыэюя])|(?<conson>[бвгджзйклмнпрстфхцчшщъь])~iu';
+    $pattern = '~(?<vowels>[аеёиоуыэюя])|(?<conson>[бвгджзйклмнпрстфхцчшщъь])~iu';
 
-preg_match_all($pattern, $content, $m);
+    preg_match_all($pattern, $content, $m);
 
-$vowels = count(array_filter($m['vowels']));
+    $vowels = count(array_filter($m['vowels']));
 
-echo "Количество гласных букв: $vowels";
+    echo "Количество гласных букв: $vowels";
+} catch (BadRequestException $e) {
+    echo $e->getMessage();
+}
